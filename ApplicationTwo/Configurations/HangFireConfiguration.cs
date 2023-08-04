@@ -1,16 +1,18 @@
 using Hangfire;
 
-namespace ApplicationTwo.Configurations;
+namespace ApplicationOne.Configurations;
 public static class HangFireConfiguration
 {
     public static void AddHangFireConfig(this IServiceCollection services, IConfiguration configuration)
     {
+        string connectionString = configuration["ConnectionStrings:HangFireDb"];
+
         services.AddHangfire(options =>
         {
-            options.UseColouredConsoleLogProvider();
-            options.UseSqlServerStorage(
-                        configuration.GetConnectionString("HangFireDb"));
+            options.UseRecommendedSerializerSettings();
+            options.UseSqlServerStorage(connectionString);
         });
+
         services.AddHangfireServer();
     }
 
