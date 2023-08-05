@@ -1,4 +1,5 @@
 using ApplicationOne.Configurations;
+using Hangfire;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ builder.Services.AddHangFireConfig(builder.Configuration);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 var app = builder.Build();
 
@@ -27,4 +29,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+RecurringJob.AddOrUpdate("Recurring Job App Two", () => Console.WriteLine("Recurring Job Executed on Application two"), Cron.Daily);
 app.Run();

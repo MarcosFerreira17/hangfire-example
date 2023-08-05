@@ -1,4 +1,5 @@
 using ApplicationOne.Configurations;
+using Hangfire;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,5 +27,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+
+RecurringJob.AddOrUpdate("Recurring Job App One", () => Console.WriteLine("Recurring Job Executed on Application One"), Cron.Daily);
+
 
 app.Run();

@@ -38,7 +38,7 @@ public class HangFireJobsController : ControllerBase
     public String Recurring()
     {
         //Recurring jobs fire many times on the specified CRON schedule.
-        RecurringJob.AddOrUpdate("Recurring Job Run Every Day", () => Console.Write("Recurring Job Executed"), Cron.Daily);
+        RecurringJob.AddOrUpdate("Recurring Job Run Every Day", () => Console.WriteLine("Recurring Job Executed"), Cron.Daily);
         return "Recurring Job Executed!";
     }
 
