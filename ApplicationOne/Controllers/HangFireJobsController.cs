@@ -17,7 +17,7 @@ public class HangFireJobsController : ControllerBase
     }
     [HttpGet]
     [Route("FireForgetJobs")]
-    public String FireForget()
+    public string FireForget()
     {
         //Fire-and-forget jobs are executed only once and almost immediately after creation.
         var jobId = BackgroundJob.Enqueue(() => Console.WriteLine("Fire And Forget Job"));
@@ -26,7 +26,7 @@ public class HangFireJobsController : ControllerBase
 
     [HttpGet]
     [Route("DelayedJobs")]
-    public String Delayed()
+    public string Delayed()
     {
         //Delayed jobs are executed only once too, but not immediately, after a certain time interval.
         var jobId = BackgroundJob.Schedule(() => Console.WriteLine("Delayed Job Executed!"), TimeSpan.FromSeconds(10));
@@ -35,7 +35,7 @@ public class HangFireJobsController : ControllerBase
 
     [HttpGet]
     [Route("RecurringJobs")]
-    public String Recurring()
+    public string Recurring()
     {
         //Recurring jobs fire many times on the specified CRON schedule.
         RecurringJob.AddOrUpdate("Recurring Job Run Every Day", () => Console.WriteLine("Recurring Job Executed"), Cron.Daily);
@@ -44,7 +44,7 @@ public class HangFireJobsController : ControllerBase
 
     [HttpGet]
     [Route("ContinuationsJobs")]
-    public async Task<String> Continuations()
+    public async Task<string> Continuations()
     {
         //Parent Job
         var jobId = BackgroundJob.Enqueue(() => Console.WriteLine("Continuations Job Parent is Being Executed!"));

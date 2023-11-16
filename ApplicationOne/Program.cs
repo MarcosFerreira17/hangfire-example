@@ -1,4 +1,6 @@
 using ApplicationOne.Configurations;
+using ApplicationOne.Jobs;
+using ApplicationOne.Services;
 using Hangfire;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,10 @@ builder.Services.AddHangFireConfig(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<IHelloWorldService, HelloWorldService>();
+
+builder.Services.AddHostedService<HelloWorldWorker>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -20,6 +26,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseHangFireConfig();
 
 app.UseHttpsRedirection();
@@ -27,9 +34,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
-
-RecurringJob.AddOrUpdate("Recurring Job App One", () => Console.WriteLine("Recurring Job Executed on Application One"), Cron.Daily);
-
 
 app.Run();
